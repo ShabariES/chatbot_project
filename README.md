@@ -79,6 +79,8 @@
 ## 📸 Screenshots & Demo
 
 <img width="1919" height="973" alt="image" src="https://github.com/user-attachments/assets/676bf96e-1400-4034-9106-3d8504091ea5" />
+<img width="1919" height="959" alt="image" src="https://github.com/user-attachments/assets/318c4711-a883-4028-9aa1-f8f79a3db09f" />
+
 
 ---
 
