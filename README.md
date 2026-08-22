@@ -78,11 +78,7 @@
 
 ## 📸 Screenshots & Demo
 
-*(Add screenshots of your UI here!)*
+<img width="1919" height="973" alt="image" src="https://github.com/user-attachments/assets/676bf96e-1400-4034-9106-3d8504091ea5" />
 
 ---
-
-## 📄 License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
