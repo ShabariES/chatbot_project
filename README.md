@@ -1,4 +1,3 @@
-# chatbot_project
 # NewTurn AI — Real-Time Streaming Chatbot Platform
 
 **NewTurn AI** is a modern, high-performance web-based AI assistant built with **Django** and powered by the **Groq API**. It features real-time Server-Sent Events (SSE) token streaming, user authentication, multi-conversation thread management, markdown rendering, and syntax-highlighted code execution previews in a sleek, responsive interface.
@@ -35,8 +34,8 @@
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/NewTurn-AI.git
-   cd NewTurn-AI
+   git clone https://github.com/ShabariES/chatbot_project.git
+   cd chatbot_project
    ```
 
 2. **Create and activate a virtual environment:**
@@ -81,6 +80,8 @@
 <img width="1919" height="973" alt="image" src="https://github.com/user-attachments/assets/676bf96e-1400-4034-9106-3d8504091ea5" />
 <img width="1919" height="959" alt="image" src="https://github.com/user-attachments/assets/318c4711-a883-4028-9aa1-f8f79a3db09f" />
 
-
 ---
 
+## 📄 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.

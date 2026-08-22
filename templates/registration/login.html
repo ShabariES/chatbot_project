@@ -1,0 +1,667 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In — NewTurn</title>
+    <meta name="description" content="Sign in to NewTurn — your intelligent AI assistant.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/logo.svg' %}">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --off-white: #f7f7f7;
+            --near-black: #0d0d0d;
+            --mid: #666666;
+            --light: #e4e4e4;
+            --lighter: #f0f0f0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: stretch;
+            background: var(--white);
+            overflow: hidden;
+        }
+
+        /* ═══════════════════════════
+           LEFT BLACK VISUAL PANEL
+        ═══════════════════════════ */
+        .panel-visual {
+            width: 48%;
+            min-width: 48%;
+            background: var(--black);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Animated grid lines */
+        .panel-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 48px 48px;
+            animation: gridShift 20s linear infinite;
+        }
+
+        @keyframes gridShift {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 48px 48px;
+            }
+        }
+
+        /* Radial glow centre */
+        .panel-visual::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 70% 60% at 45% 55%, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Floating orbital rings */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            pointer-events: none;
+        }
+
+        .orb-1 {
+            width: 340px;
+            height: 340px;
+            top: -90px;
+            right: -90px;
+            animation: float1 14s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            width: 220px;
+            height: 220px;
+            bottom: 60px;
+            left: -60px;
+            animation: float2 18s ease-in-out infinite;
+        }
+
+        .orb-3 {
+            width: 110px;
+            height: 110px;
+            top: 46%;
+            left: 38%;
+            animation: float1 10s ease-in-out infinite 2s;
+        }
+
+        @keyframes float1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0)
+            }
+
+            50% {
+                transform: translate(10px, -16px)
+            }
+        }
+
+        @keyframes float2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0)
+            }
+
+            50% {
+                transform: translate(-9px, 13px)
+            }
+        }
+
+        /* Corner bracket accents */
+        .corner {
+            position: absolute;
+            width: 36px;
+            height: 36px;
+            z-index: 3;
+        }
+
+        .corner-tl {
+            top: 28px;
+            left: 28px;
+            border-top: 1.5px solid rgba(255, 255, 255, 0.35);
+            border-left: 1.5px solid rgba(255, 255, 255, 0.35);
+        }
+
+        .corner-br {
+            bottom: 28px;
+            right: 28px;
+            border-bottom: 1.5px solid rgba(255, 255, 255, 0.35);
+            border-right: 1.5px solid rgba(255, 255, 255, 0.35);
+        }
+
+        .panel-top {
+            position: relative;
+            z-index: 4;
+            padding: 40px 44px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-mark {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--black);
+        }
+        .newturn-logo {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            vertical-align: middle;
+            fill: currentColor;
+        }
+
+        .brand-name {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.3px;
+        }
+
+        .panel-center-hero {
+            position: relative;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            flex: 1;
+            min-height: 380px;
+        }
+
+        .hero-logo-wrapper {
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.035);
+            border: 2px solid rgba(255, 255, 255, 0.16);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 120px rgba(255, 255, 255, 0.12), inset 0 0 70px rgba(255, 255, 255, 0.08);
+            position: relative;
+            animation: heroPulse 6s ease-in-out infinite;
+        }
+
+        .hero-logo-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -28px;
+            border-radius: 50%;
+            border: 2px dashed rgba(255, 255, 255, 0.22);
+            animation: rotateOuter 35s linear infinite;
+        }
+
+        @keyframes rotateOuter {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes heroPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 120px rgba(255, 255, 255, 0.12); }
+            50% { transform: scale(1.04); box-shadow: 0 0 160px rgba(255, 255, 255, 0.22); }
+        }
+
+        .hero-logo-svg {
+            width: 260px;
+            height: 260px;
+            fill: var(--white);
+            filter: drop-shadow(0 0 35px rgba(255, 255, 255, 0.6));
+        }
+
+        @media (max-height: 900px) {
+            .hero-logo-wrapper {
+                width: 280px;
+                height: 280px;
+            }
+            .hero-logo-svg {
+                width: 190px;
+                height: 190px;
+            }
+        }
+
+        .panel-content {
+            position: relative;
+            z-index: 4;
+            padding: 0 44px 52px;
+        }
+
+        .panel-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-label::before {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.25);
+            flex-shrink: 0;
+        }
+
+        .panel-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: 46px;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1.08;
+            letter-spacing: -1.2px;
+            margin-bottom: 28px;
+        }
+
+        .panel-headline em {
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 24px;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-num {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.5px;
+        }
+
+        .stat-lbl {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.38);
+            font-weight: 500;
+        }
+
+        .stat-divider {
+            width: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            align-self: stretch;
+        }
+
+        /* ═══════════════════════════
+           RIGHT WHITE FORM PANEL
+        ═══════════════════════════ */
+        .panel-form {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 52px 56px;
+            background: var(--white);
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Dot-grid texture */
+        .panel-form::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.055) 1px, transparent 1px);
+            background-size: 22px 22px;
+            pointer-events: none;
+        }
+
+        .form-card {
+            width: 100%;
+            max-width: 385px;
+            position: relative;
+            z-index: 1;
+            animation: fadeUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(26px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Pill eyebrow */
+        .form-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--mid);
+            padding: 5px 11px;
+            border: 1px solid var(--light);
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+
+        .form-eyebrow::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--black);
+        }
+
+        .form-title {
+            font-size: 38px;
+            font-weight: 900;
+            color: var(--black);
+            letter-spacing: -1.4px;
+            line-height: 1.04;
+            margin-bottom: 10px;
+        }
+
+        .form-subtitle {
+            font-size: 14px;
+            color: var(--mid);
+            margin-bottom: 32px;
+            line-height: 1.55;
+        }
+
+        .form-divider {
+            height: 1px;
+            background: var(--light);
+            margin-bottom: 28px;
+        }
+
+        /* Django field wrappers */
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field label,
+        form>p>label {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--near-black);
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .field input[type="text"],
+        .field input[type="password"],
+        form>p>input[type="text"],
+        form>p>input[type="password"] {
+            width: 100%;
+            padding: 13px 16px;
+            background: var(--off-white);
+            border: 1.5px solid var(--light);
+            border-radius: 10px;
+            color: var(--black);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+
+        }
+
+        .field input:focus,
+        form>p>input:focus {
+            border-color: var(--black);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+        }
+
+        input::placeholder {
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        form>p {
+            margin-bottom: 20px;
+        }
+
+        .errorlist {
+            list-style: none;
+            margin-top: 7px;
+            padding: 8px 12px;
+            background: var(--off-white);
+            border: 1px solid var(--light);
+            border-left: 3px solid var(--black);
+            border-radius: 8px;
+        }
+
+        .errorlist li {
+            font-size: 12px;
+            color: var(--near-black);
+            font-weight: 500;
+        }
+
+        .non-field-errors {
+            padding: 10px 14px;
+            background: var(--off-white);
+            border: 1.5px solid var(--black);
+            border-radius: 10px;
+            font-size: 13px;
+            color: var(--black);
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: var(--black);
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            font-family: 'Inter', sans-serif;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.12s, box-shadow 0.15s;
+            margin-top: 6px;
+        }
+
+        .btn-submit::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-submit:hover::after {
+            opacity: 1;
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .form-footer {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--mid);
+        }
+
+        .form-footer a {
+            color: var(--black);
+            font-weight: 700;
+            text-decoration: none;
+            border-bottom: 1.5px solid var(--black);
+            padding-bottom: 1px;
+            transition: opacity 0.15s;
+        }
+
+        .form-footer a:hover {
+            opacity: 0.45;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                overflow: auto;
+            }
+
+            .panel-visual {
+                display: none;
+            }
+
+            .panel-form {
+                padding: 44px 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Left: Black Visual Panel -->
+    <div class="panel-visual">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-br"></div>
+
+        <div class="panel-top">
+            <div class="brand">
+                <div class="brand-mark"><svg class="newturn-logo" viewBox="0 0 500 500"><path d="M 250 60 L 205 25 L 148 110 L 212 118 L 250 148 L 288 118 L 352 110 L 295 25 Z"/><path d="M 136 122 L 186 126 L 152 165 L 118 142 Z"/><path d="M 364 122 L 314 126 L 348 165 L 382 142 Z"/><path d="M 108 172 L 118 215 L 102 278 L 94 220 Z"/><path d="M 392 172 L 382 215 L 398 278 L 406 220 Z"/><path d="M 125 152 L 236 182 L 244 196 L 140 178 Z"/><path d="M 375 152 L 264 182 L 256 196 L 360 178 Z"/><path fill-rule="evenodd" d="M 144 190 L 235 204 L 228 238 L 155 232 Z M 165 204 L 222 214 L 214 226 L 172 222 Z"/><path fill-rule="evenodd" d="M 356 190 L 265 204 L 272 238 L 345 232 Z M 335 204 L 278 214 L 286 226 L 328 222 Z"/><path d="M 250 160 L 235 200 L 244 302 L 230 308 L 250 326 L 270 308 L 256 302 L 265 200 Z"/><path d="M 152 244 L 218 250 L 198 335 L 160 286 Z"/><path d="M 348 244 L 282 250 L 302 335 L 340 286 Z"/><path d="M 172 344 L 198 382 L 180 376 Z"/><path d="M 328 344 L 302 382 L 320 376 Z"/><path d="M 250 342 L 225 358 L 210 356 L 232 368 L 250 362 L 268 368 L 290 356 L 275 358 Z"/><path d="M 218 368 L 250 372 L 282 368 L 268 392 L 250 396 L 232 392 Z"/><path d="M 226 404 L 250 410 L 274 404 L 250 422 Z"/><path d="M 194 394 L 250 475 L 306 394 L 290 422 L 250 448 L 210 422 Z"/></svg></div>
+                <span class="brand-name">NewTurn</span>
+            </div>
+        </div>
+
+        <div class="panel-center-hero">
+            <div class="hero-logo-wrapper">
+                <svg class="hero-logo-svg" viewBox="0 0 500 500"><path d="M 250 60 L 205 25 L 148 110 L 212 118 L 250 148 L 288 118 L 352 110 L 295 25 Z"/><path d="M 136 122 L 186 126 L 152 165 L 118 142 Z"/><path d="M 364 122 L 314 126 L 348 165 L 382 142 Z"/><path d="M 108 172 L 118 215 L 102 278 L 94 220 Z"/><path d="M 392 172 L 382 215 L 398 278 L 406 220 Z"/><path d="M 125 152 L 236 182 L 244 196 L 140 178 Z"/><path d="M 375 152 L 264 182 L 256 196 L 360 178 Z"/><path fill-rule="evenodd" d="M 144 190 L 235 204 L 228 238 L 155 232 Z M 165 204 L 222 214 L 214 226 L 172 222 Z"/><path fill-rule="evenodd" d="M 356 190 L 265 204 L 272 238 L 345 232 Z M 335 204 L 278 214 L 286 226 L 328 222 Z"/><path d="M 250 160 L 235 200 L 244 302 L 230 308 L 250 326 L 270 308 L 256 302 L 265 200 Z"/><path d="M 152 244 L 218 250 L 198 335 L 160 286 Z"/><path d="M 348 244 L 282 250 L 302 335 L 340 286 Z"/><path d="M 172 344 L 198 382 L 180 376 Z"/><path d="M 328 344 L 302 382 L 320 376 Z"/><path d="M 250 342 L 225 358 L 210 356 L 232 368 L 250 362 L 268 368 L 290 356 L 275 358 Z"/><path d="M 218 368 L 250 372 L 282 368 L 268 392 L 250 396 L 232 392 Z"/><path d="M 226 404 L 250 410 L 274 404 L 250 422 Z"/><path d="M 194 394 L 250 475 L 306 394 L 290 422 L 250 448 L 210 422 Z"/></svg>
+            </div>
+        </div>
+
+        <div class="panel-content">
+            <div class="panel-label">Intelligence Redefined</div>
+            <div class="panel-headline">
+                The future of<br>conversation is<br><em>intelligent.</em>
+            </div>
+            <div class="stats-row">
+                <div class="stat">
+                    <div class="stat-num">∞</div>
+                    <div class="stat-lbl">Conversations</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <div class="stat-num">24/7</div>
+                    <div class="stat-lbl">Available</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <div class="stat-num">0ms</div>
+                    <div class="stat-lbl">Setup time</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right: White Form Panel -->
+    <div class="panel-form">
+        <div class="form-card">
+            <div class="form-eyebrow">Sign In</div>
+            <h1 class="form-title">Welcome<br>back.</h1>
+            <p class="form-subtitle">Enter your credentials to pick up where you left off.</p>
+            <div class="form-divider"></div>
+
+            <form method="post">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                <div class="non-field-errors">{{ form.non_field_errors }}</div>
+                {% endif %}
+                {% for field in form %}
+                <div class="field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                    <ul class="errorlist">
+                        {% for e in field.errors %}<li>{{ e }}</li>{% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn-submit" id="signin-btn">Sign In <i class="fa-solid fa-arrow-right" style="margin-left: 6px; font-size: 13px;"></i></button>
+            </form>
+
+            <div class="form-footer">
+                No account? <a href="{% url 'signup' %}">Create one free</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
