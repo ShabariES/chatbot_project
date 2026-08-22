@@ -1126,15 +1126,26 @@
 
         // Custom Renderer for Marked.js with ChatGPT style code blocks & copy buttons
         const renderer = new marked.Renderer();
-        renderer.code = function (code, lang) {
-            const language = (lang || 'code').toLowerCase();
+        renderer.code = function (codeOrObj, lang) {
+            let codeText = '';
+            let language = 'code';
+
+            if (typeof codeOrObj === 'object' && codeOrObj !== null) {
+                codeText = codeOrObj.text || '';
+                language = codeOrObj.lang || 'code';
+            } else {
+                codeText = codeOrObj || '';
+                language = lang || 'code';
+            }
+            language = language.toLowerCase();
+
             return `
                 <div class="code-block-container">
                     <div class="code-header">
                         <span>${language}</span>
                         <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> Copy Code</button>
                     </div>
-                    <pre><code class="language-${language}">${escapeHtml(code)}</code></pre>
+                    <pre><code class="language-${language}">${escapeHtml(codeText)}</code></pre>
                 </div>
             `;
         };
